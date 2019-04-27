@@ -9,13 +9,7 @@ import com.xwray.groupie.kotlinandroidextensions.Item
 class MainViewModel : ViewModel() {
     private val tasks = MutableLiveData<List<Task>>()
     val items: LiveData<List<Item>> = Transformations.map(tasks) { tasks ->
-        val items = mutableListOf<Item>()
-        val tagList = tasks.distinctBy { task -> task.tag }.map { it.tag }
-        tagList.forEach {tag ->
-            items.add(HeaderItem(tag))
-            tasks.filter { it.tag == tag }.forEach { items.add(TaskItem(it.content)) }
-        }
-        return@map items
+        taskToItem(tasks)
     }
 
     fun load() {
@@ -30,5 +24,15 @@ class MainViewModel : ViewModel() {
             Task("週課", "外出する")
         )
         tasks.value = data
+    }
+
+    private fun taskToItem(tasks: List<Task>): List<Item> {
+        val items = mutableListOf<Item>()
+        val tagList = tasks.distinctBy { task -> task.tag }.map { it.tag }
+        tagList.forEach {tag ->
+            items.add(HeaderItem(tag))
+            tasks.filter { it.tag == tag }.forEach { items.add(TaskItem(it.content)) }
+        }
+        return items
     }
 }

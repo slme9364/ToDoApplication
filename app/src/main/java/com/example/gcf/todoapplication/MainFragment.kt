@@ -8,17 +8,20 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
-import com.xwray.groupie.kotlinandroidextensions.Item
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment(R.layout.fragment_main) {
     private lateinit var mainViewModel: MainViewModel
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
         super.onViewCreated(view, savedInstanceState)
+        mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
+
+        // RecyclerView Configuration
         val groupAdapter = GroupAdapter< ViewHolder>()
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = groupAdapter
+
+        // First load and Configuration about Observer
         mainViewModel.items.observe(this, Observer { items->
             groupAdapter.update(items)
         })
