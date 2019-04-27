@@ -1,6 +1,5 @@
 package com.example.gcf.todoapplication
 
-import android.util.Log
 import com.xwray.groupie.kotlinandroidextensions.Item
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.item_tag.*

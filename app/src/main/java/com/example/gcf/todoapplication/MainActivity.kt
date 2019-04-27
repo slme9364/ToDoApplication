@@ -2,7 +2,6 @@ package com.example.gcf.todoapplication
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
