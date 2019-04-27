@@ -19,13 +19,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         val groupAdapter = GroupAdapter< ViewHolder>()
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = groupAdapter
-        mainViewModel.tasks.observe(this, Observer { tasks ->
-            val items = mutableListOf<Item>()
-            val tagList = tasks.distinctBy { task -> task.tag }.map { it.tag }
-            tagList.forEach {tag ->
-                items.add(HeaderItem(tag))
-                tasks.filter { it.tag == tag }.forEach { items.add(TaskItem(it.content)) }
-            }
+        mainViewModel.items.observe(this, Observer { items->
             groupAdapter.update(items)
         })
         mainViewModel.load()

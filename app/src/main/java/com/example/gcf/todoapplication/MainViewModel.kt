@@ -1,10 +1,22 @@
 package com.example.gcf.todoapplication
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.xwray.groupie.kotlinandroidextensions.Item
 
 class MainViewModel : ViewModel() {
-    val tasks = MutableLiveData<List<Task>>()
+    private val tasks = MutableLiveData<List<Task>>()
+    val items: LiveData<List<Item>> = Transformations.map(tasks) { tasks ->
+        val items = mutableListOf<Item>()
+        val tagList = tasks.distinctBy { task -> task.tag }.map { it.tag }
+        tagList.forEach {tag ->
+            items.add(HeaderItem(tag))
+            tasks.filter { it.tag == tag }.forEach { items.add(TaskItem(it.content)) }
+        }
+        return@map items
+    }
 
     fun load() {
         val data = listOf(
