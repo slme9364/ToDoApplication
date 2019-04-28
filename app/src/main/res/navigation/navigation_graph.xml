@@ -4,5 +4,9 @@
             android:id="@+id/navigation_graph" app:startDestination="@id/mainFragment">
 
     <fragment android:id="@+id/mainFragment" android:name="com.example.gcf.todoapplication.MainFragment"
-              android:label="MainFragment"/>
+              android:label="MainFragment">
+        <action android:id="@+id/action_mainFragment_to_createTaskFragment" app:destination="@id/createTaskFragment"/>
+    </fragment>
+    <fragment android:id="@+id/createTaskFragment" android:name="com.example.gcf.todoapplication.CreateTaskFragment"
+              android:label="CreateTaskFragment"/>
 </navigation>
