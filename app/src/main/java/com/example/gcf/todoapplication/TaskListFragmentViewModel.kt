@@ -2,7 +2,6 @@ package com.example.gcf.todoapplication
 
 import android.util.Log
 import android.view.View
-import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -21,6 +20,8 @@ class TaskListFragmentViewModel : ViewModel() {
     fun load() {
         val data = listOf(
             Task(content = "テスト"),
+            Task(content = "サンプル"),
+            Task(content = "頑張って生きる"),
             Task("日課", "毎朝起きる"),
             Task("日課", "遅刻しない"),
             Task("日課", "日付が変わる前に寝る"),
@@ -39,7 +40,7 @@ class TaskListFragmentViewModel : ViewModel() {
         val clickListener: (View) -> Unit = {
             selectedTask = it.task_content.text.toString()
             Log.d("Groupie", "Click $selectedTask")
-            isSelectedTask.postValue(true)
+            isSelectedTask.value = true
         }
         val tagList = tasks.distinctBy { task -> task.tag }.map { it.tag }
         tagList.forEach {tag ->
