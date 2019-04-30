@@ -1,6 +1,7 @@
-package com.example.gcf.todoapplication
+package com.example.gcf.todoapplication.item
 
 import android.view.View
+import com.example.gcf.todoapplication.R
 import com.xwray.groupie.kotlinandroidextensions.Item
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.item_task.*

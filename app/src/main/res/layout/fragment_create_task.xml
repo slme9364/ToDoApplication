@@ -38,6 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="32dp"
+                android:id="@+id/save_button"
                 android:text="@string/save"
         />
     </LinearLayout>
