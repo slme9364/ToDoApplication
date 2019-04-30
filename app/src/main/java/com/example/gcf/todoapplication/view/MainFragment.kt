@@ -1,4 +1,4 @@
-package com.example.gcf.todoapplication
+package com.example.gcf.todoapplication.view
 
 import android.os.Bundle
 import android.util.Log
@@ -11,17 +11,25 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.gcf.todoapplication.viewmodel.MainViewModel
+import com.example.gcf.todoapplication.R
+import com.example.gcf.todoapplication.viewmodel.TaskListViewModel
+import com.example.gcf.todoapplication.factory.TaskListViewModelFactory
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment(R.layout.fragment_main) {
-    private lateinit var viewModel: TaskListFragmentViewModel
+    private lateinit var mainViewModel: MainViewModel
+    private lateinit var viewModel: TaskListViewModel
     private lateinit var navController: NavController
     private val groupAdapter = GroupAdapter<ViewHolder>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewModel = ViewModelProviders.of(this).get(TaskListFragmentViewModel::class.java)
+        mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
+        viewModel = ViewModelProviders.of(this,
+            TaskListViewModelFactory(mainViewModel.getTaskDAO())
+        ).get(TaskListViewModel::class.java)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -42,10 +50,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         })
         viewModel.isSelectedTask.observe(this, Observer {
             if (!it) return@Observer
-            Log.d("INFO","$it")
-            Log.d("INFO", viewModel.getSelectedTask())
             viewModel.isSelectedTask.value = false
-            navController.navigate(R.id.action_mainFragment_to_taskDetailFragment)
+            navController.navigate(R.id.action_mainFragment_to_taskDetailFragment,
+                TaskDetailFragmentArgs.Builder()
+                    .setContent(viewModel.getSelectedTask())
+                    .build()
+                    .toBundle())
         })
 
         // Click Floating Action Button
