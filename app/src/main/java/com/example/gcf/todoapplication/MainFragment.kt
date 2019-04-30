@@ -48,6 +48,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             navController.navigate(R.id.action_mainFragment_to_taskDetailFragment)
         })
 
+        // Click Floating Action Button
         button.setOnClickListener {
             navController.navigate(R.id.action_mainFragment_to_createTaskFragment)
         }
